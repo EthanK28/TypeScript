@@ -3305,7 +3305,6 @@ module ts {
             }
 
             let asteriskToken = parseOptionalToken(SyntaxKind.AsteriskToken);
-            let tokenIsIdentifier = isIdentifier();
             let nameToken = token;
             let propertyName = parsePropertyName();
 
@@ -3316,7 +3315,7 @@ module ts {
             }
 
             // Parse to check if it is short-hand property assignment or normal property assignment
-            if ((token === SyntaxKind.CommaToken || token === SyntaxKind.CloseBraceToken) && tokenIsIdentifier) {
+            if ((token === SyntaxKind.CommaToken || token === SyntaxKind.CloseBraceToken) && propertyName.kind === SyntaxKind.Identifier) {
                 let shorthandDeclaration = <ShorthandPropertyAssignment>createNode(SyntaxKind.ShorthandPropertyAssignment, fullStart);
                 shorthandDeclaration.name = <Identifier>propertyName;
                 shorthandDeclaration.questionToken = questionToken;
@@ -3859,9 +3858,8 @@ module ts {
         function parseObjectBindingElement(): BindingElement {
             let node = <BindingElement>createNode(SyntaxKind.BindingElement);
             // TODO(andersh): Handle computed properties
-            let tokenIsIdentifier = isIdentifier();
             let propertyName = parsePropertyName();
-            if (tokenIsIdentifier && token !== SyntaxKind.ColonToken) {
+            if (propertyName.kind === SyntaxKind.Identifier && token !== SyntaxKind.ColonToken) {
                 node.name = <Identifier>propertyName;
             }
             else {

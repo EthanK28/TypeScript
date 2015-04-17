@@ -27,15 +27,15 @@ var y = {
     42: ,
     get e() { },
     set f() { },
-    this: ,
-    super: ,
-    var: ,
-    class: ,
-    typeof: 
+    this: this,
+    super: super,
+    var: var,
+    class: class,
+    typeof: typeof
 };
 var x = {
     a: .b,
     a: ["ss"],
     a: [1]
 };
-var v = { class:  }; // error
+var v = { class: class }; // error
